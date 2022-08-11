@@ -2,8 +2,6 @@ const divContenedor = document.querySelector(".container");
 const divResultado = document.querySelector("#resultado");
 const formulario = document.querySelector("#formulario");
 
-let ciudad;
-
 window.addEventListener("load", () => {
     formulario.addEventListener("submit", buscarClima);
 });
@@ -21,9 +19,8 @@ function buscarClima(e) {
     }
     // imprimirAlerta('Realizada correctamente');
 
-    ciudad = inpCiudad;
     // ConsultarAPI
-    consultarAPI(slcPais, inpCiudad);
+    consultarAPI(inpCiudad,slcPais);
 }
 
 function imprimirAlerta(mensaje, tipo) {
@@ -87,14 +84,15 @@ function consultarAPI(ciudad, pais) {
 const kelvinToCentigrados = grados => parseInt(grados - 273.15);
 
 function mostrarClima(datos) {
-    const { main: { temp, temp_max, temp_min } } = datos;
+
+    const { name, main: { temp, temp_max, temp_min } } = datos;
 
     const centigrados = kelvinToCentigrados(temp);
     const centigradosMax = kelvinToCentigrados(temp_max);
     const centigradosMin = kelvinToCentigrados(temp_min);
 
     const nombreCiudad = document.createElement('p');
-    nombreCiudad.textContent = `Clima en ${ciudad}`;
+    nombreCiudad.textContent = `Clima en ${name}`;
     nombreCiudad.classList.add('font-bold','text-2xl');
 
     const actual = document.createElement("p");
